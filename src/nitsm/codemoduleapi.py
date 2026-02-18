@@ -42,13 +42,20 @@ class code_module:  # noqa: N801
             if inspect.isclass(argument[1]):  # class method check
                 argument = next(arguments_iter)  # move to second argument
         except StopIteration:
-            raise TypeError(
-                (
-                    "The number of arguments to the code module is less than expected. It must "
-                    "accept as it's first argument the Semiconductor Module context passed from "
-                    "TestStand or another code module.",
+            # Fallback: look for tsm context in kwargs by name
+            for key in ("context", "tsm_context", "SemiConductorModuleContext"):
+                if key in bound_arguments.arguments:
+                    argument = (key, bound_arguments.arguments[key])
+                    break
+            else:
+                raise TypeError(
+                    (
+                        "The number of arguments to the code module is less than expected. It must "
+                        "accept as it's first argument the Semiconductor Module context passed from "
+                        "TestStand or another code module or it should be passed as a keyword argument,"
+                        " with keywords - 'context', 'tsm_context', or 'SemiConductorModuleContext'.",
+                    )
                 )
-            )
 
         # attempt to wrap argument in a SemiconductorModuleContext object
         argument_name, argument_value = argument

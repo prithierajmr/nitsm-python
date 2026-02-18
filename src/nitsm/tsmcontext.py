@@ -286,6 +286,21 @@ class SemiconductorModuleContext:
         """
         return self._context.GlobalDataExists(data_id)
 
+    def get_semiconductor_module_context_with_sites(
+            self, 
+            site_numbers: list[int]
+    ) -> "SemiconductorModuleContext":
+        """Returns a Semiconductor Module context object which holds information and resources 
+        specific to the site_numbers mentioned. 
+
+        Args:
+            site_numbers: A sequence of site numbers for which the resources should be used.
+        Returns:
+            Returns SemicondutorModuleContext object with resources specific to the site_number.
+        """
+        print("This is inside the function")
+        return SemiconductorModuleContext(self._context.GetSemiconductorModuleContextWithSites(site_numbers))
+    
     # NI-Digital
 
     def get_all_nidigital_instrument_names(self) -> "_StringTuple":
