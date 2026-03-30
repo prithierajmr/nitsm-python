@@ -288,7 +288,7 @@ class SemiconductorModuleContext:
 
     def get_semiconductor_module_context_with_sites(
             self, 
-            site_numbers: list[int]
+            site_numbers: "_Sequence[int]"
     ) -> "SemiconductorModuleContext":
         """Returns a Semiconductor Module context object which holds information and resources 
         specific to the site_numbers mentioned. 
