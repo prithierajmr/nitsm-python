@@ -286,39 +286,19 @@ class SemiconductorModuleContext:
         """
         return self._context.GlobalDataExists(data_id)
 
-    def get_semiconductor_module_context_with_sites(self,site_numbers: _Sequence[int]) -> "SemiconductorModuleContext":
+    def get_semiconductor_module_context_with_sites(
+            self, 
+            site_numbers: "_Sequence[int]"
+    ) -> "SemiconductorModuleContext":
         """Returns a Semiconductor Module context object which holds information and resources
-        specific to the site_numbers mentioned.
+        specific to the specified site_numbers.
 
         Args:
             site_numbers: A sequence of site numbers for which the resources should be used.
-
         Returns:
-            SemiconductorModuleContext object with resources specific to the site_numbers.
+            SemiconductorModuleContext object with resources specific to the specified site_numbers.
         """
-        # Normalize and validate the site numbers before passing them to the underlying
-        # Semiconductor Module context. This ensures predictable behavior for invalid or
-        # empty site lists.
-        if not site_numbers:
-            raise ValueError("site_numbers must contain at least one site number.")
-        normalized_site_numbers = []
-        
-        for site in site_numbers:
-            if not isinstance(site, int) or site < 0:
-                raise ValueError("Each site number must be a non-negative integer.")
-            normalized_site_numbers.append(site)
-
-        # We have to use DumbDispatch here because pywin32 fails to recognize
-        # ISemiconductorModuleContext as deriving from IDispatch; most likely because it isn't
-        # natively supported. So, we fetch it as IUnknown instead.
-        dumb_context = win32com.client.dynamic.DumbDispatch(self._context)
-
-        # Retrieve the SemiconductorModuleContext COM pointer for the selected sites
-        context_with_sites = dumb_context.GetSemiconductorModuleContextWithSites(normalized_site_numbers)
-        
-        # Wrap the cleaned IUnknown pointer in the Python SemiconductorModuleContext wrapper
-        return SemiconductorModuleContext(context_with_sites)
-
+        return SemiconductorModuleContext(self._context.GetSemiconductorModuleContextWithSites(site_numbers))
     
     # NI-Digital
 
