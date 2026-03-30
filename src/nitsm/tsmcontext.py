@@ -290,13 +290,13 @@ class SemiconductorModuleContext:
             self, 
             site_numbers: "_Sequence[int]"
     ) -> "SemiconductorModuleContext":
-        """Returns a Semiconductor Module context object which holds information and resources
-        specific to the specified site_numbers.
+        """Returns a Semiconductor Module context object which holds information and resources 
+        specific to the site_numbers mentioned. 
 
         Args:
             site_numbers: A sequence of site numbers for which the resources should be used.
         Returns:
-            SemiconductorModuleContext object with resources specific to the specified site_numbers.
+            Returns SemicondutorModuleContext object with resources specific to the site_number.
         """
         return SemiconductorModuleContext(self._context.GetSemiconductorModuleContextWithSites(site_numbers))
     
