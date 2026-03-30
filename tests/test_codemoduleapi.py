@@ -1,5 +1,6 @@
 import re
 import pytest
+from unittest.mock import MagicMock
 from nitsm.codemoduleapi import code_module, SemiconductorModuleContext
 
 
@@ -56,7 +57,8 @@ class TestCodeModuleApi:
         assert e.value.args[0] == (
             "The number of arguments to the code module is less than expected. It must "
             "accept as it's first argument the Semiconductor Module context passed from "
-            "TestStand or another code module.",
+            "TestStand or another code module or it should be passed as a keyword argument,"
+            " with keywords - 'context', 'tsm_context', or 'SemiconductorModuleContext'.",
         )
 
     # noinspection PyUnusedLocal
@@ -84,6 +86,25 @@ class TestCodeModuleApi:
     ):
         assert isinstance(standalone_tsm_context_com_object, SemiconductorModuleContext)
 
+    
+    def test_tsm_context_via_kwargs(self):
+        raw_com_context = MagicMock(name="RawTSMContext")
+
+        received_context = None
+
+        @code_module
+        def my_module(tsm_context=None):
+            nonlocal received_context
+            received_context = tsm_context
+            return "converted"
+        
+        result = my_module(tsm_context=raw_com_context)
+
+        # The function returned normally
+        assert result == "converted"
+
+        # Check that the wrapper converted raw COM object → SemiconductorModuleContext
+        assert isinstance(received_context, SemiconductorModuleContext)
 
 @pytest.mark.pin_map("codemoduleapi.pinmap")
 @code_module

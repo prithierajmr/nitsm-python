@@ -43,7 +43,7 @@ class code_module:  # noqa: N801
                 argument = next(arguments_iter)  # move to second argument
         except StopIteration:
             # Fallback: look for tsm context in kwargs by name
-            for key in ("context", "tsm_context", "SemiConductorModuleContext"):
+            for key in ("context", "tsm_context", "SemiconductorModuleContext"):
                 if key in bound_arguments.arguments:
                     argument = (key, bound_arguments.arguments[key])
                     break
@@ -53,7 +53,7 @@ class code_module:  # noqa: N801
                         "The number of arguments to the code module is less than expected. It must "
                         "accept as it's first argument the Semiconductor Module context passed from "
                         "TestStand or another code module or it should be passed as a keyword argument,"
-                        " with keywords - 'context', 'tsm_context', or 'SemiConductorModuleContext'.",
+                        " with keywords - 'context', 'tsm_context', or 'SemiconductorModuleContext'.",
                     )
                 )
 
