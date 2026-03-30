@@ -298,7 +298,6 @@ class SemiconductorModuleContext:
         Returns:
             Returns SemicondutorModuleContext object with resources specific to the site_number.
         """
-        print("This is inside the function")
         return SemiconductorModuleContext(self._context.GetSemiconductorModuleContextWithSites(site_numbers))
     
     # NI-Digital
