@@ -1,9 +1,9 @@
 import pytest
-from nitsm.codemoduleapi import Capability, InstrumentTypeIdConstants
-from nitsm.codemoduleapi import SemiconductorModuleContext
+
 
 @pytest.mark.pin_map("multi_site.pinmap")
 class TestMultiSite:
+    pin_map_dut_pins = ["DUTPin1"]
     pin_map_dut_pins = ["DUTPin1"]
     pin_map_system_pins = ["SystemPin1", "SystemPin2"]
 
