@@ -8,7 +8,6 @@ class TestMultiSite:
     pin_map_system_pins = ["SystemPin1", "SystemPin2"]
 
     def test_get_semiconductor_module_with_sites(self, standalone_tsm_context):
-        all_sites = standalone_tsm_context.site_numbers
         # Get context for sites 1 and 3
         site_numbers = [1, 3]
         filtered_tsm_context = standalone_tsm_context.get_semiconductor_module_context_with_sites(site_numbers)
