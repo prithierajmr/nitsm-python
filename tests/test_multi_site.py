@@ -13,9 +13,15 @@ class TestMultiSite:
         site_numbers = [1, 3]
         filtered_tsm_context = standalone_tsm_context.get_semiconductor_module_context_with_sites(site_numbers)
         filtered_sites = list(filtered_tsm_context.site_numbers)
-        
+
         # Validate the site numbers
         assert len(site_numbers) == len(filtered_sites)
         assert site_numbers == filtered_sites
         for site in site_numbers:
             assert site in filtered_sites
+
+        # Validate that a fully initialized SemiconductorModuleContext wrapper is returned
+        assert isinstance(filtered_tsm_context, SemiconductorModuleContext)
+        # Exercise another wrapper method to catch initialization regressions
+        pin_names = list(filtered_tsm_context.get_pin_names())
+        assert isinstance(pin_names, list)
