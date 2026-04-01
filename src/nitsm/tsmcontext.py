@@ -216,7 +216,7 @@ class SemiconductorModuleContext:
             site_numbers: A sequence of site numbers for which the resources should be used.
             
         Returns:
-            SemicondutorModuleContext object with resources specific to the site_numbers.
+            SemiconductorModuleContext object with resources specific to the site_numbers.
         """
         tsm_dispatch = self._context.GetSemiconductorModuleContextWithSites(site_numbers)
         semiconductor_module_context_with_sites = SemiconductorModuleContext.__new__(SemiconductorModuleContext)
